@@ -12,9 +12,8 @@ public class NameService implements  INameService{
     ServiceRepository repository = new ServiceRepository();
 
     @Override
-    public void bind(String name, ConsoleProxy aor) {
-        System.out.println("bind called");
-        repository.add(new ServiceInstance(name, aor));
+    public void bind(String name, ConsoleProxy consoleProxy) {
+        repository.add(new ServiceInstance(name, consoleProxy));
     }
 
     @Override

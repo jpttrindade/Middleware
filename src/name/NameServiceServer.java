@@ -1,8 +1,6 @@
 package name;
 
 import client.invocation.ConsoleProxy;
-import common.ClientProxy;
-import common.Message;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,24 +21,20 @@ public class NameServiceServer {
             ObjectInputStream objectInputStream;
             ObjectOutputStream objectOutputStream = null;
             ServerSocket ssk = new ServerSocket(1717);
+            System.out.println("Servidor de Nomes ONLINE");
 
             while (true) {
-
-                System.out.println("Vamos entrar");
                 sk = ssk.accept();
-                System.out.println("Estamos On");
+                System.out.println("<<<Nova conexão>>>");
                 System.out.println(sk.toString());
 
                 objectInputStream = new ObjectInputStream(sk.getInputStream());
 
                 NameServiceMessage message = (NameServiceMessage) objectInputStream.readObject();
-                System.out.println("Mensagem lida");
-
 
                 if (message.op.equals("bind")) {
                     System.out.println("bind");
-
-                    nameService.bind(message.param, new ConsoleProxy(message.host, message.port));
+                    nameService.bind(message.param, new ConsoleProxy(message.host, message.port, message.obejctID));
                 } else if (message.op.equals("lookup")){
                     System.out.println("lookup");
 
@@ -50,6 +44,7 @@ public class NameServiceServer {
                     ConsoleProxy consoleProxy = nameService.lookup(message.param);
                     msg.host = consoleProxy.getHost();
                     msg.port = consoleProxy.getPort();
+                    msg.obejctID = consoleProxy.getObjectID();
 
                     objectOutputStream.writeObject(msg);
                     objectOutputStream.flush();

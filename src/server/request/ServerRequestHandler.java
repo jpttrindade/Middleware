@@ -1,8 +1,6 @@
 package server.request;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -28,7 +26,8 @@ public class ServerRequestHandler {
 
         dtin = new DataInputStream(sk.getInputStream());
 
-        byte[] bytes = new byte[dtin.read()];
+
+        byte[] bytes = new byte[dtin.readInt()];
         dtin.read(bytes);
 
         return bytes;
@@ -36,6 +35,7 @@ public class ServerRequestHandler {
 
     public void send(byte[] bytes) throws IOException {
         dtout = new DataOutputStream(sk.getOutputStream());
+        dtout.writeInt(bytes.length);
         dtout.write(bytes);
         dtout.flush();
 

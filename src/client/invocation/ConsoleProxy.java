@@ -12,9 +12,14 @@ public class ConsoleProxy extends ClientProxy implements Console {
 
     private Requestor requestor;
 
-    public ConsoleProxy(String host, int port) {
-        super(host, port);
+    public ConsoleProxy(String host, int port, String objectID) {
+        super(host, port, objectID);
         requestor = new Requestor(host, port);
+    }
+
+    @Override
+    public String getID() {
+        return getObjectID();
     }
 
     @Override
@@ -22,6 +27,7 @@ public class ConsoleProxy extends ClientProxy implements Console {
         Message m = new Message();
         m.operacao = "print";
         m.param = text;
+        m.objectID = getObjectID();
         requestor.invoke(m);
     }
 }

@@ -1,7 +1,6 @@
 package name;
 
 import client.invocation.ConsoleProxy;
-import common.ClientProxy;
 
 /**
  * Created by jpttrindade on 19/05/16.

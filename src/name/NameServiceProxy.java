@@ -20,29 +20,27 @@ public class NameServiceProxy implements INameService{
     public NameServiceProxy(String _host, int _port) {
         host = _host;
         port = _port;
-
-
     }
 
     @Override
-    public void bind(String name, ConsoleProxy aor) {
+    public void bind(String name, ConsoleProxy consoleProxy) {
         try {
             socket = new Socket(host, port);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
             NameServiceMessage msg = new NameServiceMessage();
             msg.op = "bind";
-            msg.host = aor.getHost();
-            msg.port = aor.getPort();
+            msg.host = consoleProxy.getHost();
+            msg.port = consoleProxy.getPort();
             msg.param = name;
-
+            msg.obejctID = consoleProxy.getObjectID();
             objectOutputStream.writeObject(msg);
             objectOutputStream.flush();
             objectOutputStream.close();
             socket.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -67,14 +65,12 @@ public class NameServiceProxy implements INameService{
 
             NameServiceMessage  msg2 = (NameServiceMessage) objectInputStream.readObject();
 
-
             socket.close();
             objectInputStream.close();
             objectOutputStream.close();
 
 
-
-            return new ConsoleProxy(msg2.host, msg2.port);
+            return new ConsoleProxy(msg2.host, msg2.port, msg2.obejctID );
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

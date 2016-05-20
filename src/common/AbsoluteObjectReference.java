@@ -6,8 +6,6 @@ package common;
 public class AbsoluteObjectReference {
 
     String host;
-    int ip;
-    String protocolo;
     String objectId;
 
 

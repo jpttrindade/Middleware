@@ -12,5 +12,6 @@ public class NameServiceMessage implements Serializable{
     String host;
     int port;
     String param;
+    String obejctID;
 
 }

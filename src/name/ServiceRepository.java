@@ -17,8 +17,9 @@ public class ServiceRepository {
         ServiceInstance si = null;
         for (ServiceInstance s : services) {
             if(s.name.equals(name)){
-                System.out.println("Service cadastrado e encontrado");
+                System.out.println("Serviço encontrado!!");
                 si = s;
+                System.out.println("["+si.name +"]"+ " : "+si.clientProxy.getID() + " : "+ si.clientProxy.getHost());
             }
         }
         return si;

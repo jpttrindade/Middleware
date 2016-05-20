@@ -18,13 +18,18 @@ public class Marshaller {
     }
 
     public Message unmarshall(byte[] bytes) throws IOException {
-
-        String[] tokens = new String(bytes).split(";");
+        ByteArrayInputStream str = new ByteArrayInputStream(bytes);
+        StringBuilder sb = new StringBuilder();
+        int ch;
+        while((ch = str.read()) != -1) {
+            sb.append((char) ch);
+        }
+        String s = sb.toString();
+        String[] tokens = s.split(";");
         Message message = new Message();
         message.objectID  = tokens[0];
         message.operacao = tokens[1];
         message.param = tokens[2];
-
         return message;
     }
 

@@ -33,20 +33,17 @@ public class ClientRequestHandler {
         dtout = new DataOutputStream(sk.getOutputStream());
 
         dtin = new DataInputStream(sk.getInputStream());
-
+        dtout.writeInt(bytes.length);
         dtout.write(bytes);
-
         dtout.flush();
-
         receive();
     }
 
     private void receive() throws IOException {
-       // System.out.println("dtin.read() = "+dtin.read());
-        byte[] bytes = new byte[dtin.read()];
+        byte[] bytes = new byte[dtin.readInt()];
         dtin.read(bytes);
         String st = new String(bytes);
-        System.out.println(st);
+        System.out.println("echo "+st);
         sk.close();
         dtout.close();
         dtin.close();
